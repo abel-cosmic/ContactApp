@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+<!--this are the colors we are going to use in the project-->
+    <color name="gray_background">#171717</color>
+    <color name="text_color">#F0F0F0</color>
+    <color name="icon_gray">#999999</color>
+    <color name="background">#010101</color>
+    <color name="call_green">#15B76C</color>
+    <color name="profile">#EAA595</color>
+    <color name="message">#36B9E3</color>
+    <color name="alphabets">#2D2D2D</color>
+    <color name="hints">#C46D42</color>
+
 </resources>
