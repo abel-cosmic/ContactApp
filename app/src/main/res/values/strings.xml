@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ContactApp</string>
+    <string name="favourites">Favourites</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="more">More</string>
 </resources>
