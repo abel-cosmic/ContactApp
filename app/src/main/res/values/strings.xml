@@ -3,5 +3,8 @@
     <string name="favourites">Favourites</string>
     <string name="edit">Edit</string>
     <string name="share">Share</string>
-    <string name="more">More</string>
+    <string name="contact_name">Contact name</string>
+    <string name="mobile">Mobile</string>
+    <string name="phone_number">+251913131313</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ContactApp.Menu" parent="Theme.AppCompat">
+        <item name="android:itemBackground">@drawable/menu_item_background</item>
+    </style>
+    <style name="green_btn" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/call_green</item>
+        <item name="cornerRadius">60dp</item>
+    </style>
+    <style name="blue_btn" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/message</item>
+        <item name="cornerRadius">60dp</item>
+    </style>
+</resources>

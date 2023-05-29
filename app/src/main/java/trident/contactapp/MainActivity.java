@@ -1,14 +1,14 @@
 package trident.contactapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-
+import android.view.MenuItem;
 import trident.contactapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private ContactDB contactDB;
     private ActivityMainBinding binding;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
