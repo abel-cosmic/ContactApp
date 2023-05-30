@@ -7,4 +7,12 @@
     <string name="mobile">Mobile</string>
     <string name="phone_number">+251913131313</string>
     <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_phone_number">Add phone number</string>
+    <string name="_251913131313">+251913131313</string>
 </resources>
