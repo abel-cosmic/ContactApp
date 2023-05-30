@@ -6,25 +6,28 @@ public class Contact {
     private String phoneNumber;
     private String email;
     private String address;
+    private int isFavorite;
 
     public Contact(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
 
-    public Contact(Long id, String name, String phoneNumber, String email, String address) {
+    public Contact(Long id, String name, String phoneNumber, String email, String address, int isFavorite) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
+        this.isFavorite = isFavorite;
     }
 
-    public Contact(String name, String phoneNumber, String email, String address) {
+    public Contact(String name, String phoneNumber, String email, String address, int isFavorite) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
+        this.isFavorite = isFavorite;
     }
 
     public Long getId() {
@@ -67,6 +70,14 @@ public class Contact {
         this.address = address;
     }
 
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
@@ -75,6 +86,7 @@ public class Contact {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
+                ", isFavorite=" + isFavorite +
                 '}';
     }
 }

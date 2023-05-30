@@ -22,6 +22,8 @@ public class ContactDB {
         public static final String PHONE_NUMBER = "phone_number";
         public static final String EMAIL = "email";
         public static final String ADDRESS = "address";
+        public static final String IS_FAVORITE = "is_favorite";
+
     }
 
     private static final String SQL_CREATE_ENTRIES = //This is THE QUERY THAT CREATES YOUR TABLE IN YOUR ANDROID
@@ -30,7 +32,9 @@ public class ContactDB {
                     FeedEntry.NAME + " TEXT NOT NULL," +
                     FeedEntry.PHONE_NUMBER + " TEXT NOT NULL," +
                     FeedEntry.EMAIL + " TEXT," +
-                    FeedEntry.ADDRESS + " TEXT)";
+                    FeedEntry.ADDRESS + " TEXT," +
+                    FeedEntry.IS_FAVORITE + " INTEGER DEFAULT 0)"
+            ;
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
@@ -63,6 +67,7 @@ public class ContactDB {
         values.put(FeedEntry.PHONE_NUMBER, contact.getPhoneNumber());
         values.put(FeedEntry.EMAIL, contact.getEmail());
         values.put(FeedEntry.ADDRESS, contact.getAddress());
+        values.put(FeedEntry.IS_FAVORITE, contact.getIsFavorite());
         long newRowId = db.insert(FeedEntry.TABLE_NAME, null, values);
     }
     @NonNull
@@ -85,12 +90,14 @@ public class ContactDB {
         int columnIndexOfPhoneNumber = 0 ;
         int columnIndexOfEmail = 0 ;
         int columnIndexOfAddress = 0 ;
+        int columnIndexOfIsFavorite = 0 ;
         try {
             columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
             columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
             columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
             columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
             columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
+            columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -100,8 +107,59 @@ public class ContactDB {
                 cursor.getString(columnIndexOfName),
                 cursor.getString(columnIndexOfPhoneNumber),
                 cursor.getString(columnIndexOfEmail),
-                cursor.getString(columnIndexOfAddress)
+                cursor.getString(columnIndexOfAddress),
+                cursor.getInt(columnIndexOfIsFavorite)
         );
+    }
+    @NonNull
+    List<Contact> readAllFavorites(){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sortOrder =
+                FeedEntry.NAME + " ASC";
+        String selection = FeedEntry.IS_FAVORITE + " = ?";
+        String[] selectionArgs = { "1" };
+        Cursor cursor = db.query(
+                FeedEntry.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        int columnIndexOfID = 0 ;
+        int columnIndexOfName = 0 ;
+        int columnIndexOfPhoneNumber = 0 ;
+        int columnIndexOfEmail = 0 ;
+        int columnIndexOfAddress = 0 ;
+        int columnIndexOfIsFavorite = 0 ;
+        try {
+            columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
+            columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
+            columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
+            columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
+            columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
+            columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        List<Contact> contacts= new ArrayList<>();
+        while(cursor.moveToNext()) {
+            Contact contact = new Contact(
+                    cursor.getLong(columnIndexOfID),
+                    cursor.getString(columnIndexOfName),
+                    cursor.getString(columnIndexOfPhoneNumber),
+                    cursor.getString(columnIndexOfEmail),
+                    cursor.getString(columnIndexOfAddress),
+                    cursor.getInt(columnIndexOfIsFavorite)
+            );
+            contacts.add(contact);
+        }
+        cursor.close();
+
+        return contacts;
     }
     @NonNull
     List<Contact> readAll(){
@@ -123,12 +181,14 @@ public class ContactDB {
         int columnIndexOfPhoneNumber = 0 ;
         int columnIndexOfEmail = 0 ;
         int columnIndexOfAddress = 0 ;
+        int columnIndexOfIsFavorite = 0 ;
         try {
             columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
             columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
             columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
             columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
             columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
+            columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -140,7 +200,8 @@ public class ContactDB {
                     cursor.getString(columnIndexOfName),
                     cursor.getString(columnIndexOfPhoneNumber),
                     cursor.getString(columnIndexOfEmail),
-                    cursor.getString(columnIndexOfAddress)
+                    cursor.getString(columnIndexOfAddress),
+                    cursor.getInt(columnIndexOfIsFavorite)
             );
             contacts.add(contact);
         }
@@ -165,6 +226,7 @@ public class ContactDB {
         values.put(FeedEntry.PHONE_NUMBER, contact.getPhoneNumber());
         values.put(FeedEntry.EMAIL, contact.getEmail());
         values.put(FeedEntry.ADDRESS, contact.getAddress());
+        values.put(FeedEntry.IS_FAVORITE, contact.getIsFavorite());
 
 
         String selection = FeedEntry._ID + " LIKE ?";
