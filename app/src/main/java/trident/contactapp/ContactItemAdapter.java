@@ -24,6 +24,7 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView initial;
         private final TextView name;
+        private final View line;
 
         public ViewHolder(View view) {
             super(view);
@@ -31,6 +32,7 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
             // Define click listener for the ViewHolder's View
             initial = (TextView) view.findViewById(R.id.initial);
             name = (TextView) view.findViewById(R.id.name);
+            line = view.findViewById(R.id.lineView);
             f.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
@@ -91,6 +93,9 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
         Random random = new Random();
         String randomColor = COLORS[random.nextInt(COLORS.length)];
         viewHolder.getInitial().setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(randomColor)));;
+//        if (position == getItemCount() - 1){
+//            viewHolder.line.setVisibility(View.INVISIBLE);
+//        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -7,46 +7,102 @@
     android:backgroundTint="@color/background"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/baseline_person_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Contacts"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/add"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/white_add_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/favourites"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/favourites"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/unfilled_star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="600sp"
+        android:layout_height="0sp"
+        android:layout_marginTop="3sp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:layout_editor_absoluteX="0dp">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
 
-<!--            <ImageView-->
-<!--                android:layout_width="15sp"-->
-<!--                android:layout_height="15sp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginStart="20sp"-->
-<!--                android:src="@drawable/white_star_icon" />-->
+        <!--            <ImageView-->
+        <!--                android:layout_width="15sp"-->
+        <!--                android:layout_height="15sp"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:layout_marginStart="20sp"-->
+        <!--                android:src="@drawable/white_star_icon" />-->
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="5sp"-->
-<!--                android:text="Favorites" />-->
-<!--        </LinearLayout>-->
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="5sp"-->
+        <!--                android:text="Favorites" />-->
+        <!--        </LinearLayout>-->
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/favouritesRecyclerView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="3sp"-->
-<!--            android:background="@drawable/border_radius"-->
-<!--            android:gravity="center" />-->
-
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/favouritesRecyclerView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="3sp"-->
+        <!--            android:background="@drawable/border_radius"-->
+        <!--            android:gravity="center" />-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contactsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20sp"
-            android:background="@drawable/border_radius"
-            android:gravity="center"
-            android:layout_marginBottom="10sp"/>
+            android:layout_marginTop="5sp"
+            android:background="@drawable/border_radius_top"
+            android:gravity="center" />
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
