@@ -71,47 +71,6 @@ public class ContactDB {
         long newRowId = db.insert(FeedEntry.TABLE_NAME, null, values);
     }
     @NonNull
-    Contact read(String id){
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selection = FeedEntry._ID + " = ?";
-        String[] selectionArgs = { id };
-        Cursor cursor = db.query(
-                FeedEntry.TABLE_NAME,
-                null,
-                selection,              // The columns for the WHERE clause
-                selectionArgs,          // The values for the WHERE clause
-                null,
-                null,
-                null
-        );
-
-        int columnIndexOfID = 0 ;
-        int columnIndexOfName = 0 ;
-        int columnIndexOfPhoneNumber = 0 ;
-        int columnIndexOfEmail = 0 ;
-        int columnIndexOfAddress = 0 ;
-        int columnIndexOfIsFavorite = 0 ;
-        try {
-            columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
-            columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
-            columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
-            columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
-            columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
-            columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        cursor.moveToNext();
-        return new Contact(
-                cursor.getLong(columnIndexOfID),
-                cursor.getString(columnIndexOfName),
-                cursor.getString(columnIndexOfPhoneNumber),
-                cursor.getString(columnIndexOfEmail),
-                cursor.getString(columnIndexOfAddress),
-                cursor.getInt(columnIndexOfIsFavorite)
-        );
-    }
-    @NonNull
     List<Contact> readAllFavorites(){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String sortOrder =
@@ -208,6 +167,54 @@ public class ContactDB {
         cursor.close();
 
         return contacts;
+    }
+    Contact read(@NonNull String id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // Define 'where' part of query.
+        String selection = FeedEntry._ID + " = ?";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = { id };
+        // Issue SQL statement.
+        Cursor cursor = db.query(
+                FeedEntry.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null,
+                "1"
+        );
+
+        int columnIndexOfID = 0 ;
+        int columnIndexOfName = 0 ;
+        int columnIndexOfPhoneNumber = 0 ;
+        int columnIndexOfEmail = 0 ;
+        int columnIndexOfAddress = 0 ;
+        int columnIndexOfIsFavorite = 0 ;
+        try {
+            columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
+            columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
+            columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
+            columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
+            columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
+            columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        cursor.moveToNext();
+        Contact contact = new Contact(
+                cursor.getLong(columnIndexOfID),
+                cursor.getString(columnIndexOfName),
+                cursor.getString(columnIndexOfPhoneNumber),
+                cursor.getString(columnIndexOfEmail),
+                cursor.getString(columnIndexOfAddress),
+                cursor.getInt(columnIndexOfIsFavorite)
+        );
+        cursor.close();
+
+        return contact;
+
     }
     void delete(@NonNull String id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

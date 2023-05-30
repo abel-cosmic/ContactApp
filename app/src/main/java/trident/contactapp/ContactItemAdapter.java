@@ -1,5 +1,9 @@
 package trident.contactapp;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,7 +20,7 @@ import java.util.Random;
 public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.ViewHolder> {
 
     private static List<Contact> localDataSet;
-
+    private static Context context;
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder)
@@ -34,15 +38,14 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
             name = (TextView) view.findViewById(R.id.name);
             line = view.findViewById(R.id.lineView);
             f.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION) {
-                                Contact clickedContact = localDataSet.get(position);
-                                System.out.println(clickedContact.toString());
-                                //TODO: PASS THE CURRENT ITEM TO CONTACTS PAGE
-                            }
+                    view1 -> {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Contact clickedContact = localDataSet.get(position);
+                            System.out.println(clickedContact.toString());
+                            Intent intent = new Intent(context, ViewContact.class);
+                            intent.putExtra("id", clickedContact.getId().toString());
+                            context.startActivity(intent);
                         }
                     }
             );
@@ -56,7 +59,6 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
             return initial;
         }
     }
-
     /**
      * Initialize the dataset of the Adapter
      *
@@ -73,7 +75,7 @@ public class ContactItemAdapter extends RecyclerView.Adapter<ContactItemAdapter.
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.contact_item, viewGroup, false);
-
+        context = viewGroup.getContext();
         return new ViewHolder(view);
     }
 

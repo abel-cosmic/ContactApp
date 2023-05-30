@@ -52,35 +52,29 @@ public class MainActivity extends AppCompatActivity {
 
 
         binding.add.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
-                        startActivity(intent);
-                    }
+                view -> {
+                    Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
+                    startActivity(intent);
                 }
         );
         binding.favourites.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (favoritesTab){
-                            RecyclerView recyclerView = binding.contactsRecyclerView;
-                            ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAll());
-                            recyclerView.setHasFixedSize(false);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                            recyclerView.setAdapter(adapter);
-                            binding.favourites.setImageDrawable(getDrawable(R.drawable.unfilled_star));
-                            favoritesTab = false;
-                        } else {
-                            RecyclerView recyclerView = binding.contactsRecyclerView;
-                            ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAllFavorites());
-                            recyclerView.setHasFixedSize(false);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                            recyclerView.setAdapter(adapter);
-                            binding.favourites.setImageDrawable(getDrawable(R.drawable.filled_star));
-                            favoritesTab = true;
-                        }
+                view -> {
+                    if (favoritesTab){
+                        RecyclerView recyclerView1 = binding.contactsRecyclerView;
+                        ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAll());
+                        recyclerView1.setHasFixedSize(false);
+                        recyclerView1.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        recyclerView1.setAdapter(adapter);
+                        binding.favourites.setImageDrawable(getDrawable(R.drawable.unfilled_star));
+                        favoritesTab = false;
+                    } else {
+                        RecyclerView recyclerView1 = binding.contactsRecyclerView;
+                        ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAllFavorites());
+                        recyclerView1.setHasFixedSize(false);
+                        recyclerView1.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+                        recyclerView1.setAdapter(adapter);
+                        binding.favourites.setImageDrawable(getDrawable(R.drawable.filled_star));
+                        favoritesTab = true;
                     }
                 }
         );
