@@ -27,35 +27,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         contactDB = new ContactDB(this);
 
-        contactDB.readAll().forEach(
-                contact -> {
-                    contactDB.delete(contact.getId().toString());
-                }
-        );
-        contactList.forEach(
-                c ->{
-                    contactDB.create(c);
-                }
-        );
-
-        contactDB.readAll().forEach(
-                System.out::println
-        );
+//        contactDB.readAll().forEach(
+//                contact -> {
+//                    contactDB.delete(contact.getId().toString());
+//                }
+//        );
+//        contactList.forEach(
+//                c ->{
+//                    contactDB.create(c);
+//                }
+//        );
+//
+//        contactDB.readAll().forEach(
+//                System.out::println
+//        );
 
 
         RecyclerView recyclerView = binding.contactsRecyclerView;
-        ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAllFavorites());
+//        ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAllFavorites());
         ContactItemAdapter adapter2 = new ContactItemAdapter(contactDB.readAll());
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter2);
 
 
         binding.add.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, PhoneActivity.class);
+                        Intent intent = new Intent(MainActivity.this, AddContactActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         if (favoritesTab){
                             RecyclerView recyclerView = binding.contactsRecyclerView;
                             ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAll());
-                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setHasFixedSize(false);
                             recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                             recyclerView.setAdapter(adapter);
                             binding.favourites.setImageDrawable(getDrawable(R.drawable.unfilled_star));
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             RecyclerView recyclerView = binding.contactsRecyclerView;
                             ContactItemAdapter adapter = new ContactItemAdapter(contactDB.readAllFavorites());
-                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setHasFixedSize(false);
                             recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                             recyclerView.setAdapter(adapter);
                             binding.favourites.setImageDrawable(getDrawable(R.drawable.filled_star));

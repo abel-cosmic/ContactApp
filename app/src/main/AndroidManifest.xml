@@ -16,7 +16,7 @@
             android:name=".EditUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".PhoneActivity"
+            android:name=".AddContactActivity"
             android:exported="false" >
         </activity>
         <activity

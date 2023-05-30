@@ -39,5 +39,5 @@
         android:layout_marginTop="45sp"
         android:layout_width="match_parent"
         android:background="@drawable/line"
-        android:layout_height="3sp"/>
+        android:layout_height="1sp"/>
 </FrameLayout>

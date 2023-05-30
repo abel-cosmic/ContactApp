@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/gray_background"
-    tools:context=".PhoneActivity">
+    tools:context=".AddContactActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
