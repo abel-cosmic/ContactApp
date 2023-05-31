@@ -15,4 +15,6 @@
     <string name="save">Save</string>
     <string name="add_phone_number">Add phone number</string>
     <string name="_251913131313">+251913131313</string>
+    <string name="no_recent_searches">No recent searches</string>
+    <string name="search">Search</string>
 </resources>

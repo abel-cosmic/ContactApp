@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         contactDB = new ContactDB(this);
+        binding.searchButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, SearchContact.class);
+            startActivity(intent);
+        });
 
 //        contactDB.readAll().forEach(
 //                contact -> {

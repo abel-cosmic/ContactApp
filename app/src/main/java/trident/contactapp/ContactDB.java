@@ -13,9 +13,51 @@ import java.util.List;
 public class ContactDB {
     ContactDBHelper dbHelper;
     ContactDB(Context context) {
-         dbHelper = new ContactDBHelper(context);
+        dbHelper = new ContactDBHelper(context);
 
     }
+
+    public List<Contact> searchContacts(String searchQuery) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String sortOrder = FeedEntry.NAME + " ASC";
+        String selection = FeedEntry.NAME + " LIKE ?";
+        String[] selectionArgs = { "%" + searchQuery + "%" };
+
+        Cursor cursor = db.query(
+                FeedEntry.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        int columnIndexOfID = cursor.getColumnIndex(FeedEntry._ID);
+        int columnIndexOfName = cursor.getColumnIndexOrThrow(FeedEntry.NAME);
+        int columnIndexOfPhoneNumber = cursor.getColumnIndexOrThrow(FeedEntry.PHONE_NUMBER);
+        int columnIndexOfEmail = cursor.getColumnIndexOrThrow(FeedEntry.EMAIL);
+        int columnIndexOfAddress = cursor.getColumnIndexOrThrow(FeedEntry.ADDRESS);
+        int columnIndexOfIsFavorite = cursor.getColumnIndexOrThrow(FeedEntry.IS_FAVORITE);
+
+        List<Contact> contacts = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Contact contact = new Contact(
+                    cursor.getLong(columnIndexOfID),
+                    cursor.getString(columnIndexOfName),
+                    cursor.getString(columnIndexOfPhoneNumber),
+                    cursor.getString(columnIndexOfEmail),
+                    cursor.getString(columnIndexOfAddress),
+                    cursor.getInt(columnIndexOfIsFavorite)
+            );
+            contacts.add(contact);
+        }
+        cursor.close();
+
+        return contacts;
+    }
+
+
     public static class FeedEntry implements BaseColumns { //This class has all the columns of the table
         public static final String TABLE_NAME = "contact";
         public static final String NAME = "name";

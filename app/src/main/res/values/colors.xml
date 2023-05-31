@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
 <!--this are the colors we are going to use in the project-->
-    <color name="gray_background">#171717</color>
+    <color name="gray_background">#F3202020</color>
     <color name="text_color">#F0F0F0</color>
     <color name="icon_gray">#999999</color>
     <color name="background">#010101</color>
