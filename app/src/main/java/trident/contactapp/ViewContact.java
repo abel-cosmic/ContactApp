@@ -1,12 +1,12 @@
 package trident.contactapp;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -14,13 +14,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -29,7 +27,6 @@ import trident.contactapp.databinding.ActivityViewContactBinding;
 
 public class ViewContact extends AppCompatActivity {
     ActivityViewContactBinding binding;
-    private ContactDB contactDB;
     private static final int PICK_IMAGE_REQUEST = 1;
     private ImageButton selectImageButton;
 
@@ -39,11 +36,12 @@ public class ViewContact extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityViewContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        contactDB = new ContactDB(this);
+
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
-        System.out.println("+++++++++++++++++++++++++++++++++++++++ view ============" + id);
-        Contact contact = contactDB.read(id);
+
+
+        Contact contact = read(id);
 
         if (contact.getIsFavorite() == 1) {
             binding.bottomNavigation.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#FFF100")));
@@ -73,11 +71,11 @@ public class ViewContact extends AppCompatActivity {
                             if (contact.getIsFavorite() == 1) {
                                 binding.bottomNavigation.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                                 contact.setIsFavorite(0);
-                                contactDB.update(contact);
+                                removeFromFavorite(contact.getId().toString());
                             } else {
                                 binding.bottomNavigation.setItemIconTintList(ColorStateList.valueOf(Color.parseColor("#FFF100")));
                                 contact.setIsFavorite(1);
-                                contactDB.update(contact);
+                                addToFavorite(contact.getId().toString());
                             }
                             break;
                         case R.id.edit:
@@ -88,7 +86,7 @@ public class ViewContact extends AppCompatActivity {
                         case R.id.share:
                             break;
                         case R.id.delete:
-                            contactDB.delete(id);
+                            delete(id);
                             Intent goToMain = new Intent(ViewContact.this, MainActivity.class);
                             startActivity(goToMain);
                             break;
@@ -98,6 +96,54 @@ public class ViewContact extends AppCompatActivity {
         );
     }
 
+    Contact read(String id){
+        String selection = ContactDataBase.id + " = ?";
+        String[] selectionArgs = { id };
+        Cursor cursor = getContentResolver().query(
+                ContactDataBase.CONTENT_URI,
+                null, selection, selectionArgs, null);
+
+        int idIndex = cursor.getColumnIndex(ContactDataBase.id);
+        int nameIndex = cursor.getColumnIndex(ContactDataBase.name);
+        int phoneNumberIndex = cursor.getColumnIndex(ContactDataBase.phoneNumber);
+        int emailIndex = cursor.getColumnIndex(ContactDataBase.email);
+        int addressIndex = cursor.getColumnIndex(ContactDataBase.address);
+        int isFavoriteIndex = cursor.getColumnIndex(ContactDataBase.isFavorite);
+
+        cursor.moveToNext();
+        Contact contact = new Contact(
+                    cursor.getInt(idIndex),
+                    cursor.getString(nameIndex),
+                    cursor.getString(phoneNumberIndex),
+                    cursor.getString(emailIndex),
+                    cursor.getString(addressIndex),
+                    cursor.getInt(isFavoriteIndex)
+        );
+
+        cursor.close();
+
+        return contact;
+    }
+    private void addToFavorite(String id){
+        ContentValues values = new ContentValues();
+        values.put(ContactDataBase.isFavorite, 1);
+        String selection = ContactDataBase.id + " = ?";
+        String[] selectionArgs = { id };
+        int count = getContentResolver().update(ContactDataBase.CONTENT_URI, values, selection, selectionArgs);
+    }
+    private void removeFromFavorite(String id){
+        ContentValues values = new ContentValues();
+        values.put(ContactDataBase.isFavorite, 0);
+        String selection = ContactDataBase.id + " = ?";
+        String[] selectionArgs = { id };
+        int count = getContentResolver().update(ContactDataBase.CONTENT_URI, values, selection, selectionArgs);
+    }
+
+    private void delete(String id){
+        String selection = ContactDataBase.id + " = ?";
+        String[] selectionArgs = { id };
+        int count = getContentResolver().delete(ContactDataBase.CONTENT_URI, selection, selectionArgs);
+    }
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
