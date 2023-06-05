@@ -22,7 +22,7 @@ public class AddContactActivity extends AppCompatActivity {
         binding = ActivityAddContactBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // used to add fot testing 
+        // used to add fot testing
 //        contactList.forEach(
 //                c ->{
 //                    ContentValues values = new ContentValues();

@@ -1,7 +1,9 @@
 package trident.contactapp;
 
+import android.content.Intent;
+
 public class Contact {
-    private  Long id;
+    private Integer id;
     private String name;
     private String phoneNumber;
     private String email;
@@ -13,7 +15,7 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
 
-    public Contact(Long id, String name, String phoneNumber, String email, String address, int isFavorite) {
+    public Contact(Integer id, String name, String phoneNumber, String email, String address, int isFavorite) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -30,11 +32,11 @@ public class Contact {
         this.isFavorite = isFavorite;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
